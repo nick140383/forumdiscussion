@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Forum de partage{% endblock %}</title>
+        <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="/css/style.css"/>
+
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="/"></a><img src="{{ asset('img/yannicklogo.png') }}" alt="Logo Yannick Forum" width="120px"</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    {% if app.user %}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/conversations">Conversations<span class="sr-only">(current)</span></a>
+                        </li>
+                    {% endif %}
+                    {% if not app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Inscription</a>
+                    </li>
+                    {% endif %}
+                    {% if not app.user %}
+                        <li class="nav-item">
+                            <a href="{{ path('authentication_user') }}" class="nav-link">Connexion</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{{ path('authentication_logout') }}" class="nav-link">Déconnexion</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                {% if app.user %}
+                    <span><strong class="text-danger">{{app.user.username}}</strong></span>
+                {% endif %}
+            </div>
+        </nav>
+
+        {% block body %}
+            {# read and display all flash messages #}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+
+        {% endblock %}
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ForumPartage{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+    <div class="bg-success">
+       <h3 style="text-align: center;">Salut   <span><strong class="text-danger">{{app.user.username}}</strong></span> Bienvenue sur YannickForum</h3>
+        <h4 style="text-align: center;">  Cliquez sur Conversations pour pouvoir partager avec d'autres membres ou sur Deconnexion pour quitter</h4>
+    </div>
+    {% else %}
+    <div class="bg-success">
+        <h3 style="text-align: center;">Salut  Bienvenue sur YannickForum</h3>
+
+    </div>
+    {% endif %}
+{% endblock %}

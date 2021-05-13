@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ConversationController!{% endblock %}
+
+{% block body %}
+
+
+    <div id="ajout_conversation" class="jumbotron" style="width:1050px; margin-left:auto;margin-right:auto;margin-top:100px;">
+        <h3 class="text-center" style="margin-bottom: 40px;"> Les sujets</h3>
+        <form method="post" action="/ajoutConversation">
+            <input class="form-control input_add " type="text" name="sujet" placeholder="Inserer un sujet" required style="width:900px;display:inline-block"/>
+
+            <input class="input-btn-add btn btn-primary" type="submit" value="deposer" style="float:left;display:inline-block;float:right;">
+
+        </form>
+        <hr />
+        {% for conversation in conversations%}
+            <a href="{{ path("conversations.details",{id:conversation.id}) }}" style="text-decoration:none;">
+            <div class="btn-info" style="margin-bottom:1px; border-radius:5px;">
+                <div><h4 class="text-primary" style="margin-left:15px;text-align: center;">{{ conversation.sujetConversation }}</h4>&nbsp</div>
+                <div style="padding:3px;">
+                 <div style="text-align: center;">
+                <div style="display:inline-block">Sujet déposé par:{{ conversation.utilisateur.pseudo}}</div> &nbsp
+                <div style="display:inline-block">résidant à:{{ conversation.utilisateur.ville.nom}}</div>&nbsp
+                <div style="display:inline-block">le:{{ conversation.date|date('d-m-y')}}</div>
+                 </div>
+                </div>
+            </div>
+            </a>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

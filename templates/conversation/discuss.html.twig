@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ConversationController!{% endblock %}
+
+{% block body %}
+    <div class="bg-info">
+    <h3 style="text-align:center;">{{ conversation.sujetConversation }}</h3>
+    <div style="color:white; text-align: center;">
+        <div style="display:inline-block"> Sujet déposé par:{{ conversation.utilisateur.pseudo}}</div>&nbsp
+        <div style="display:inline-block">residant à:{{ conversation.utilisateur.ville.nom}}</div>&nbsp
+        <div style="display:inline-block">ecrit le::{{ conversation.date|date('d-m-y')}}</div>
+
+    </div>
+    </div>
+<div class="jumbotron" style="background-color: gainsboro;border-radius:5px;margin-top: 20px;width:1100px;margin-right: auto; margin-left:auto;"><h4 style="text-align:center;">Commentaires</h4>
+    {% for message in conversation.messages %}
+    <div style="margin-bottom:1px;">
+
+    <div {% if message.utilisateur.sexe == 'H' %} style="background-color:powderblue;padding:5px;border-top-left-radius: 5px;border-top-right-radius: 5px;" {% else %} style="background-color:lightpink; padding:5px;border-top-left-radius: 5px; border-top-right-radius: 5px;" {% endif %}>
+        <div style="text-align: center;">
+            <div style="display: inline-block;">Ecrit par:<b>{{ message.utilisateur.pseudo }}</b></div>&nbsp
+            <div style="display: inline-block;">Residant à:<b>{{ message.utilisateur.ville.nom }}</b></div>&nbsp
+            <div style="display: inline-block;">Ecrit le <b>{{ message.date|date('Y-m-d\\TH:i')}}</b></div>
+        </div>
+    </div>
+    <div {% if message.utilisateur.sexe == 'H' %} style="background-color: powderblue;padding:5px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;" {% else %} style="background-color: lightpink;padding:5px;border-bottom-left-radius: 5px; border-bottom-right-raduis:5px;" {% endif %}>
+        <div class="text-primary" style="display: inline-block">{{ message.contenu }}</div>&nbsp&nbsp
+    </div>
+    </div>
+    {% endfor %}
+    <hr />
+    <div id="block_ajout_message" class="container bg-defaut"><h5> {{app.user.username}}, &nbsp ajoutez ici un ou des mes messages, si vous le voulez bien.</h5>
+        <form method="post" action="/conversations/{{ conversation.id }}/ajoutMessage">
+            <textarea class="testarea-add form-control" name="message" placeholder="ecrivez un message" required></textarea>
+
+            <div style="text-align: center;"><button class="btn btn-primary" style="margin-top:5px;display: block;">Enregistrer</button></div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
